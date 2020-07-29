@@ -1,0 +1,44 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+.grid {
+	height: calc(var(--grid-width) * 4rem);
+	width: calc(var(--grid-width) * 4rem);
+	display: flex;
+	flex-wrap: wrap;
+	background-color: gray;
+}
+
+.grid div {
+	height: 4rem;
+	width: 4rem;
+	border: 1px solid black;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.blown {
+	background-color: orange;
+}
+
+.defused {
+	background-color: green;
+}
+
+.checked {
+	background-color: paleturquoise;
+	font-size: 2rem;
+}
+
+:root {
+	--grid-width: 10;
+}
