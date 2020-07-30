@@ -55,6 +55,15 @@ html {
 	align-items: center;
 }
 
+.flag-container {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	width: 20vw;
+	font-size: 2rem;
+	margin-bottom: 1rem;
+}
+
 .bomb {
 	font-size: 3rem;
 }

@@ -1,7 +1,8 @@
 const grid = document.querySelector('.grid');
 const message = document.querySelector('.message');
 const details = document.querySelector('.details');
-
+const flagToggle = document.querySelector('.flag-mode');
+let isFlagMode = false;
 const width = 10;
 const bombCount = Math.floor((width * width) / 10);
 document.querySelector('.bomb-number').textContent = bombCount;
@@ -42,7 +43,7 @@ const addFlag = (e) => {
 		square.classList.remove('flag');
 		square.classList.add('question');
 		square.textContent = '?';
-		const j = let.indexOf(parseInt(square.id));
+		const j = flagSquares.indexOf(parseInt(square.id));
 		if (j != -1) flagSquares.splice(j, 1);
 		flags--;
 		document.querySelector('.flag-number').textContent = flags;
@@ -122,6 +123,12 @@ const reveal = (e) => {
 	let square = e;
 	if (e.target) square = e.target;
 	if (isGameOver || square.classList.contains('checked')) return;
+
+	if (isFlagMode) {
+		addFlag(e);
+		return;
+	}
+
 	if (square.classList.contains('bomb')) {
 		gameOver();
 		return;
@@ -237,10 +244,15 @@ const restart = () => {
 	showMessage(false);
 	message.textContent = 'Game Over!';
 	squares.length = 0;
+	isFlagMode = false;
+	flagToggle.checked = false;
 	flagSquares = [];
 	grid.innerHTML = '';
 	createBoard();
 };
 
 document.querySelector('.restart').addEventListener('click', restart);
+flagToggle.addEventListener('change', () => {
+	isFlagMode = flagToggle.checked;
+});
 createBoard();
