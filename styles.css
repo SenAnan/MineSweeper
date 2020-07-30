@@ -4,8 +4,30 @@
 	margin: 0;
 }
 
+*::selection {
+	background-color: transparent;
+}
+
+:root {
+	--grid-width: 10;
+}
+
 html {
 	font-size: 62.5%;
+	font-family: sans-serif;
+}
+
+.container {
+	min-width: 100vw;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title {
+	font-size: 5rem;
+	padding: 2rem 0;
 }
 
 .grid {
@@ -14,6 +36,7 @@ html {
 	display: flex;
 	flex-wrap: wrap;
 	background-color: gray;
+	margin-bottom: 3rem;
 }
 
 .grid div {
@@ -26,19 +49,88 @@ html {
 	align-items: center;
 }
 
-.blown {
-	background-color: orange;
+.bomb {
+	font-size: 3rem;
 }
 
-.defused {
-	background-color: green;
+.blown {
+	background-color: coral;
 }
 
 .checked {
-	background-color: paleturquoise;
-	font-size: 2rem;
+	background-color: linen;
+	font-size: 3rem;
 }
 
-:root {
-	--grid-width: 10;
+.flag {
+	font-size: 3rem;
+	background-color: linen;
+}
+
+.wrong {
+	background-color: coral;
+}
+
+.question {
+	font-size: 3rem;
+	background-color: linen;
+	color: blue;
+}
+.defused {
+	background-color: lightgreen;
+}
+.text {
+	font-size: 3rem;
+}
+
+.one {
+	color: blue;
+}
+
+.two {
+	color: green;
+}
+
+.three {
+	color: red;
+}
+
+.four {
+	color: purple;
+}
+
+.five {
+	color: maroon;
+}
+
+.six {
+	color: turquoise;
+}
+
+.seven {
+	color: black;
+}
+
+.eight {
+	color: gray;
+}
+
+.restart {
+	width: 20rem;
+	height: 7rem;
+	margin: 3rem;
+	font-size: 3rem;
+	cursor: pointer;
+}
+
+.details {
+	text-align: center;
+}
+
+.hidden {
+	display: none;
+}
+
+.message {
+	font-size: 5rem;
 }

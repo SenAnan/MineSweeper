@@ -1,31 +1,54 @@
 const grid = document.querySelector('.grid');
+const message = document.querySelector('.message');
+const details = document.querySelector('.details');
 
 const width = 10;
-const bombCount = Math.floor((width * width) / 5);
+const bombCount = Math.floor((width * width) / 10);
+document.querySelector('.bomb-number').textContent = bombCount;
 let flags = 0;
 document.documentElement.style.setProperty('--grid-width', width);
 const squares = [];
-flagSquares = [];
+let flagSquares = [];
 let isGameOver = false;
+
+const colorMap = {
+	1: 'one',
+	2: 'two',
+	3: 'three',
+	4: 'four',
+	5: 'five',
+	6: 'six',
+	7: 'seven',
+	8: 'eight',
+};
 
 const addFlag = (e) => {
 	e.preventDefault();
 	const square = e.target;
 	if (isGameOver) return;
 	if (square.classList.contains('checked')) return;
-	if (!square.classList.contains('flag') && flags < bombCount) {
+	if (
+		!square.classList.contains('flag') &&
+		!square.classList.contains('question') &&
+		flags < bombCount
+	) {
 		square.classList.add('flag');
-		square.textContent = 'FLAG';
+		square.textContent = '🚩';
 		flags++;
+		document.querySelector('.flag-number').textContent = flags;
 		flagSquares.push(parseInt(square.id));
 		checkForWin();
-	} else {
+	} else if (square.classList.contains('flag')) {
 		square.classList.remove('flag');
-		square.textContent = '';
-		const j = flagSquares.indexOf(parseInt(square.id));
-		console.log(j);
+		square.classList.add('question');
+		square.textContent = '?';
+		const j = let.indexOf(parseInt(square.id));
 		if (j != -1) flagSquares.splice(j, 1);
 		flags--;
+		document.querySelector('.flag-number').textContent = flags;
+	} else {
+		square.classList.remove('question');
+		square.textContent = '';
 	}
 };
 
@@ -98,15 +121,24 @@ const createBoard = () => {
 const reveal = (e) => {
 	let square = e;
 	if (e.target) square = e.target;
-	if (isGameOver || square.classList.contains('checked') || square.classList.contains('flag'))
-		return;
+	if (isGameOver || square.classList.contains('checked')) return;
 	if (square.classList.contains('bomb')) {
 		gameOver();
 		return;
 	}
 	const total = square.getAttribute('data');
+	if (square.classList.contains('flag')) {
+		square.classList.remove('flag');
+		const j = flagSquares.indexOf(parseInt(square.id));
+		if (j != -1) flagSquares.splice(j, 1);
+		flags--;
+		document.querySelector('.flag-number').textContent = flags;
+	}
+	square.classList.remove('question');
+	square.textContent = '';
 	square.classList.add('checked');
 	if (total != 0) {
+		square.classList.add(colorMap[total]);
 		square.textContent = total;
 	} else {
 		checkSquare(square);
@@ -147,16 +179,29 @@ const checkSquare = (square) => {
 const gameOver = () => {
 	console.log('BOOM! Game Over!');
 	isGameOver = true;
+	showMessage(true);
 	squares.forEach((el) => {
 		if (el.classList.contains('bomb')) {
-			el.textContent = 'BOMB';
+			el.textContent = '💣';
 			if (el.classList.contains('flag')) {
 				el.classList.add('defused');
 			} else {
 				el.classList.add('blown');
 			}
+		} else if (el.classList.contains('flag')) {
+			el.classList.add('wrong');
 		}
 	});
+};
+
+const showMessage = (toggle) => {
+	if (toggle) {
+		message.classList.remove('hidden');
+		details.classList.add('hidden');
+	} else {
+		message.classList.add('hidden');
+		details.classList.remove('hidden');
+	}
 };
 
 const checkForWin = () => {
@@ -167,6 +212,8 @@ const checkForWin = () => {
 			}
 		}
 		console.log('YOU WIN');
+		message.textContent = 'YOU WIN!';
+		showMessage(true);
 		isGameOver = true;
 	} else {
 		for (let i = 0; i < squares.length - 1; i++) {
@@ -178,8 +225,22 @@ const checkForWin = () => {
 			if (squares[i].getAttribute('data') != 0) return false;
 		}
 		console.log('YOU WIN');
+
 		isGameOver = true;
 	}
 };
 
+const restart = () => {
+	flags = 0;
+	isGameOver = false;
+	document.querySelector('.flag-number').textContent = 0;
+	showMessage(false);
+	message.textContent = 'Game Over!';
+	squares.length = 0;
+	flagSquares = [];
+	grid.innerHTML = '';
+	createBoard();
+};
+
+document.querySelector('.restart').addEventListener('click', restart);
 createBoard();

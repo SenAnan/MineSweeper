@@ -4,10 +4,22 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="styles.css" />
-		<title>Minesweeper</title>
+		<link rel="icon" href="bomb.png" />
+		<title>Mine Sweeper</title>
 	</head>
 	<body>
-		<div class="grid"></div>
+		<div class="container">
+			<h1 class="title">Mine Sweeper</h1>
+			<main class="grid"></main>
+			<h2 class="message hidden">Game Over!</h2>
+			<div class="details">
+				<h2 class="text bomb-text">
+					Number of Bombs: <span class="text bomb-number"></span>
+				</h2>
+				<h2 class="text flag-text">Flags Used: <span class="text flag-number">0</span></h2>
+			</div>
+			<button class="restart">RESTART</button>
+		</div>
 		<script src="app.js"></script>
 	</body>
 </html>
