@@ -17,6 +17,12 @@ html {
 	font-family: sans-serif;
 }
 
+@media only screen and (max-width: 600px) {
+	html {
+		font-size: 50%;
+	}
+}
+
 .container {
 	min-width: 100vw;
 	min-height: 100vh;
